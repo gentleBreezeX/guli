@@ -1,11 +1,12 @@
 package com.breeze.guli.service.base.handler;
 
+import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.breeze.guli.common.base.result.R;
 import com.breeze.guli.common.base.result.ResultCodeEnum;
 import com.breeze.guli.common.base.util.ExceptionUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,14 +31,14 @@ public class GlobalExceptionHandler {
     public R error(HttpMessageNotReadableException e){
         log.error(ResultCodeEnum.JSON_PARSE_ERROR.toString());
         log.error(ExceptionUtils.getMessage(e));
-        return R.error();
+        return R.setResult(ResultCodeEnum.JSON_PARSE_ERROR);
     }
 
-    @ExceptionHandler(BadSqlGrammarException.class)
+    @ExceptionHandler(MyBatisSystemException.class)
     @ResponseBody
-    public R error(BadSqlGrammarException e){
+    public R error(MyBatisSystemException e){
         log.error(ResultCodeEnum.BAD_SQL_GRAMMAR.toString());
         log.error(ExceptionUtils.getMessage(e));
-        return R.error();
+        return R.setResult(ResultCodeEnum.BAD_SQL_GRAMMAR);
     }
 }
