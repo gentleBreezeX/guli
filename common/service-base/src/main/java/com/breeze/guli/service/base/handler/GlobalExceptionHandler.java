@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.breeze.guli.common.base.result.R;
 import com.breeze.guli.common.base.result.ResultCodeEnum;
 import com.breeze.guli.common.base.util.ExceptionUtils;
+import com.breeze.guli.service.base.exception.OnlineEduException;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -40,5 +41,12 @@ public class GlobalExceptionHandler {
         log.error(ResultCodeEnum.BAD_SQL_GRAMMAR.toString());
         log.error(ExceptionUtils.getMessage(e));
         return R.setResult(ResultCodeEnum.BAD_SQL_GRAMMAR);
+    }
+
+    @ExceptionHandler(OnlineEduException.class)
+    @ResponseBody
+    public R error(OnlineEduException e){
+        log.error(ExceptionUtils.getMessage(e));
+        return R.error().message(e.getMessage()).code(e.getCode());
     }
 }
