@@ -2,6 +2,11 @@ package com.breeze.guli.service.edu.service;
 
 import com.breeze.guli.service.edu.entity.Subject;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.breeze.guli.service.edu.vo.SubjectVO;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +18,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SubjectService extends IService<Subject> {
 
+    void batchImport(InputStream inputStream) throws Exception;
+
+    List<SubjectVO> nestedList();
 }
